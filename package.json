@@ -11,7 +11,7 @@
     "prerender": "ng run univercel:prerender",
     "git": "git add . && git commit -m refactor",
     "push": "git push origin master",
-    "vercel-build": "echo univercel"
+    "vercel-build": "yarn build:ssr"
   },
   "private": true,
   "dependencies": {
