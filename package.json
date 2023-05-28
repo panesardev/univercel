@@ -1,6 +1,7 @@
 {
   "name": "univercel",
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
     "start": "yarn start",
     "dev": "ng serve",
