@@ -7,31 +7,10 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "inlineTemplate": true,
           "inlineStyle": true,
           "style": "scss",
           "skipTests": true,
           "standalone": true
-        },
-        "@schematics/angular:class": {
-          "skipTests": true
-        },
-        "@schematics/angular:directive": {
-          "skipTests": true,
-          "standalone": true
-        },
-        "@schematics/angular:guard": {
-          "skipTests": true
-        },
-        "@schematics/angular:interceptor": {
-          "skipTests": true
-        },
-        "@schematics/angular:pipe": {
-          "skipTests": true,
-          "standalone": true
-        },
-        "@schematics/angular:resolver": {
-          "skipTests": true
         },
         "@schematics/angular:service": {
           "skipTests": true
@@ -44,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/univercel",
+            "outputPath": "dist/univercel/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -53,7 +32,6 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
@@ -105,6 +83,61 @@
           "options": {
             "browserTarget": "univercel:build"
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/univercel/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false,
+              "vendorChunk": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "univercel:build:development",
+              "serverTarget": "univercel:server:development"
+            },
+            "production": {
+              "browserTarget": "univercel:build:production",
+              "serverTarget": "univercel:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "univercel:build:production",
+              "serverTarget": "univercel:server:production"
+            },
+            "development": {
+              "browserTarget": "univercel:build:development",
+              "serverTarget": "univercel:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
